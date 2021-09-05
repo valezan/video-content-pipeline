@@ -20,6 +20,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using System.Reflection;
 using System.IO;
+using Microsoft.EntityFrameworkCore;
+using VideoContentPipeline.Services;
 
 namespace VideoContentPipeline
 {
@@ -45,8 +47,11 @@ namespace VideoContentPipeline
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApiContext>(opt => opt.UseInMemoryDatabase("VideoContentPipeline"));
             services.AddCors();
             services.AddControllers();
+
+            services.AddScoped<IVideoService, VideoService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(options =>
@@ -126,6 +131,14 @@ namespace VideoContentPipeline
             services.AddHttpContextAccessor();
 
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
+            services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .AddAuthenticationSchemes("UserPass")
+                    .Build();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -135,7 +148,7 @@ namespace VideoContentPipeline
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
@@ -143,6 +156,8 @@ namespace VideoContentPipeline
                 {
                     options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
                 }
+
+                options.OAuthUseBasicAuthenticationWithAccessCodeGrant();
             });
 
             app.UseHttpsRedirection();
