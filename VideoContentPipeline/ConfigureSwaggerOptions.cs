@@ -29,12 +29,14 @@ namespace VideoContentPipeline
             {
                 Title = "Video Content Pipeline",
                 Version = description.ApiVersion.ToString(),
-                Description = @"<p>Centralized web API that retuns videos metadata</p>",
+                Description = @"<p>Centralized web API that returns metadata for videos</p>",
             };
+
             if (description.IsDeprecated)
             {
                 info.Description += @"<p><strong>THIS VERSION IS DEPRECATED</strong></p>";
             }
+
             return info;
         }
     }
