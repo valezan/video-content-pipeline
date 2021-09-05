@@ -155,7 +155,7 @@ namespace VideoContentPipeline
                 options.OAuthUseBasicAuthenticationWithAccessCodeGrant();
             });
 
-            app.UseHttpsRedirection();
+
 
             app.UseRouting();
 
