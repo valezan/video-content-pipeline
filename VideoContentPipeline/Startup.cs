@@ -115,13 +115,14 @@ namespace VideoContentPipeline
 
                 config.ReportApiVersions = true;
             });
+
             services.AddVersionedApiExplorer(
                 options =>
                 {
                     options.GroupNameFormat = "'v'VVV";
                     options.SubstituteApiVersionInUrl = true;
                 }
-                );
+            );
 
             services.AddHttpContextAccessor();
 
@@ -145,6 +146,7 @@ namespace VideoContentPipeline
             }
 
             app.UseSwagger();
+
             app.UseSwaggerUI(options =>
             {
                 foreach (var description in provider.ApiVersionDescriptions)
@@ -160,12 +162,10 @@ namespace VideoContentPipeline
             app.UseRouting();
 
             app.UseAuthentication();
+
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
 
     }

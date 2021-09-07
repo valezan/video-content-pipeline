@@ -12,6 +12,7 @@ namespace VideoContentPipeline.Services
     public class VideoService: IVideoService
     {
         private readonly ApiContext apiContext;
+
         public VideoService(ApiContext apiContext)
         {
             this.apiContext = apiContext;

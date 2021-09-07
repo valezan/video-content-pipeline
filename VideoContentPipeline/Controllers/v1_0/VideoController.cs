@@ -24,7 +24,7 @@ namespace VideoContentPipeline.Controllers.v1_0
         {
             this.videoService = videoService;
         }
-                
+
         [HttpPut]
         [MapToApiVersion("1.0")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
@@ -93,11 +93,11 @@ namespace VideoContentPipeline.Controllers.v1_0
             {
                 var result = videoService.GetByThemeId(themeId);
                 return Ok(result);
-            }           
+            }
             catch(ArgumentNullException e)
             {
                 return BadRequest(new ApiError(400, e.Message));
-            }           
+            }
             catch(Exception e)
             {
                 return StatusCode(500, new ApiError(500, e.Message));
@@ -105,6 +105,7 @@ namespace VideoContentPipeline.Controllers.v1_0
         }
 
         [HttpPost]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.InternalServerError)]
@@ -134,6 +135,7 @@ namespace VideoContentPipeline.Controllers.v1_0
         }
 
         [HttpDelete]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.InternalServerError)]
@@ -143,7 +145,7 @@ namespace VideoContentPipeline.Controllers.v1_0
             {
                 var result = await videoService.Delete(id);
                 return Ok(result);
-            }           
+            }
             catch(IdentityNullException e)
             {
                 return BadRequest(new ApiError(400, e.Message));
@@ -159,6 +161,7 @@ namespace VideoContentPipeline.Controllers.v1_0
         }
 
         [HttpPost]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.InternalServerError)]
@@ -177,7 +180,7 @@ namespace VideoContentPipeline.Controllers.v1_0
             {
                 return BadRequest(new ApiError(400, e.Message));
             }
-          
+
             catch(Exception e)
             {
                 return StatusCode(500, new ApiError(500, e.Message));
